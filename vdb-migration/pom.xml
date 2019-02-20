@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <groupId>com.examples</groupId>
+    <artifactId>teiid-openshift-examples-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>vdb-migration-utility</artifactId>
+  <name>Teiid VDB Migration Utility</name>
+  <version>1.0.0</version>
+  
+    <dependencies>
+      <dependency>
+        <groupId>org.teiid</groupId>
+        <artifactId>teiid-runtime</artifactId>
+        <version>${version.teiid}</version>
+      </dependency>
+    </dependencies>
+
+	<profiles>
+		<profile>
+			<id>defaultuser</id>
+			<activation>
+				<property>
+					<name>vdb</name>
+				</property>
+			</activation>            
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>${version.org.codehaus.mojo.exec.plugin}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>java</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<classpathScope>test</classpathScope>
+							<mainClass>org.teiid.runtime.util.ConvertVDB</mainClass>
+							<arguments>
+								<argument>${vdb}</argument>
+                                <argument>${output}</argument>
+							</arguments>
+							<cleanupDaemonThreads>false</cleanupDaemonThreads>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+  
+</project>
